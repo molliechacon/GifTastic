@@ -1,22 +1,21 @@
 var topics = ["who's the boss", "game of thrones", "playing house", "superstore", "perfect strangers", "firefly", "gilmore girls", "modern family", "gravity falls", "downton abbey", "full house", "new girl", "supernatural", "wonder years", "project runway", "quantum leap", "macgyver", "grace and frankie", "sherlock", "big bang theory"];
 
 
-function makeButtons() {
-	for (i = 0; i < topics.length; i++) {
-		$("#tvShowButtons").append('<input type="button" class="btn btn-success" value="' + topics[i] + '">');
-	}
-};
-makeButtons();
 
+for (i = 0; i < topics.length; i++) {
+	$("#tvShowButtons").append('<input type="button" class="btn btn-success" value="' + topics[i] + '">');
+	};
 
 $("#addShow").on("click", function(event) {
   event.preventDefault();
   var newShow = $("#tvShowInput").val().trim();
   topics.push(newShow);
   $("#tvShowButtons").empty();
-  makeButtons(); 
-});
-
+  console.log(topics);
+  for(k = 0; k < topics.length; k++) {
+  	$("#tvShowButtons").append('<input type="button" class="btn btn-success" value="' + topics[k] + '">');
+  };
+})
 
 $(".btn").on("click", function() {
 	event.preventDefault();
