@@ -1,10 +1,14 @@
 var topics = ["who's the boss", "game of thrones", "playing house", "superstore", "perfect strangers", "firefly", "gilmore girls", "modern family", "gravity falls", "downton abbey", "full house", "new girl", "supernatural", "wonder years", "project runway", "quantum leap", "macgyver", "grace and frankie", "sherlock", "big bang theory"];
 
 
-
-for (i = 0; i < topics.length; i++) {
-		$("#tvShowButtons").append('<input type="button" class="btn btn-success" value="' + topics[i] + '">');
+function makeButtons() {
+		for (i = 0; i < topics.length; i++) {
+				$("#tvShowButtons").append('<input type="button" class="btn btn-success" value="' + topics[i] + '">');
 		};
+}
+
+
+makeButtons();
 
 
 $("#addShow").on("click", function(event) {
@@ -13,15 +17,14 @@ $("#addShow").on("click", function(event) {
   		var newShow = $("#tvShowInput").val().trim();
 
   		topics.push(newShow);
+  		// $("#tvShowInput").text(" ");
   		$("#tvShowButtons").empty();
   		console.log(topics);
-  		for(k = 0; k < topics.length; k++) {
-  			$("#tvShowButtons").append('<input type="button" class="btn btn-success" value="' + topics[k] + '">');
-  		}
+  		makeButtons();
 })
 
 
-$(".btn").on("click", function() {
+$("#tvShowButtons").on("click", ".btn", function() {
 		event.preventDefault();
 
   		var show = $(this).attr("value");
@@ -32,7 +35,9 @@ $(".btn").on("click", function() {
       		method: "GET"
     	}).done(function(response) {
      		console.log(response);
+
       		var results = response.data;
+
       		for (j = 0; j < results.length; j++) {
 
        			var showDiv = $("<div>");
@@ -50,19 +55,23 @@ $(".btn").on("click", function() {
 		       	showDiv.append(showImage);
 		       	showDiv.append(p);
        		   	$("#tvShowGifs").prepend(showDiv);
-	           	$(".gif").on("click", function() {
-		        	var state = $(this).attr("data-state");
-	   				if (state === "still") {
-	    				$(this).attr("src", $(this).attr("data-animate"));
-	        			$(this).attr("data-state", "animate");
-	    			} else {
-	       				$(this).attr("src", $(this).attr("data-still"));
-	        			$(this).attr("data-state", "still");
-	    			}
-				}); 
+	           	
 	  		}
 		})
 });
+
+$("#tvShowGifs").on("click", ".gif", function() {
+
+		var state = $(this).attr("data-state");
+
+	   	if (state === "still") {
+	    		$(this).attr("src", $(this).attr("data-animate"));
+	        	$(this).attr("data-state", "animate");
+	    } else {
+	       		$(this).attr("src", $(this).attr("data-still"));
+	        	$(this).attr("data-state", "still");
+	    }
+}); 
 
 
 
